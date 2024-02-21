@@ -201,3 +201,5 @@ cq_env/Scripts/pip3.12.exe
 cq_env/Scripts/pip3.exe
 cq_env/Scripts/python.exe
 cq_env/Scripts/pythonw.exe
+cq_env/*
+
