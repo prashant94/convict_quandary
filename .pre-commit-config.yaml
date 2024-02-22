@@ -1,0 +1,52 @@
+fail_fast: true
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: pretty-format-json
+        args: ['--autofix']
+  - repo: local
+    hooks:
+      - id: black-format-src
+        name: black-format-src
+        entry: python -m black
+        args: ["./convictquandary/"]
+        language: python
+        types: [python]
+        additional_dependencies: [black]
+        pass_filenames: false
+        verbose: true
+  - repo: local
+    hooks:
+      - id: black-format-tests
+        name: black-format-tests
+        entry: python -m black
+        args: ["./tests/"]
+        language: python
+        types: [python]
+        pass_filenames: false
+        additional_dependencies: [black]
+        verbose: true
+  - repo: local
+    hooks:
+      - id: flake8-linting
+        name: flake8-linting
+        entry: flake8
+        args: ["./convictquandary/","./tests/"]
+        language: python
+        types: [python]
+        pass_filenames: false
+        additional_dependencies: ['flake8']
+        verbose: true
+  - repo: local
+    hooks:
+      - id: unit-tests
+        name: unit-tests
+        entry: python -m pytest
+        language: python
+        types: [python]
+        pass_filenames: false
+        additional_dependencies: [pytest]

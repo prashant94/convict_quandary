@@ -1,5 +1,6 @@
 from player_logic import PlayerLogic
-from constants import Action, Persuasion, Belief
+from constants import Action, Persuasion
+
 
 class Player:
 
@@ -18,7 +19,7 @@ class Player:
             self.persuasions,
             self.beliefs,
             self.opponent_actions,
-            self.opponent_persuasions
+            self.opponent_persuasions,
         )
         self.persuasions.append(player_persuasion)
         return player_persuasion
@@ -30,19 +31,19 @@ class Player:
             self.persuasions,
             self.beliefs,
             self.opponent_actions,
-            self.opponent_persuasions
+            self.opponent_persuasions,
         )
         player_action = self.player_logic.get_action(
             self.actions,
             self.persuasions,
             self.beliefs,
             self.opponent_actions,
-            self.opponent_persuasions
+            self.opponent_persuasions,
         )
         self.beliefs.append(player_belief)
         self.actions.append(player_action)
         return player_action
-    
+
     def save_outcome(self, opponent_move: Action, score: int) -> None:
         self.opponent_actions.append(opponent_move)
         self.score += score
