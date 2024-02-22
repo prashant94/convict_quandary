@@ -1,6 +1,9 @@
 from game import Game
 from player import Player
-from player_logics import LogicAlwaysDefectBelieveTruth, LogicAlwaysCooperateBelieveTruth
+from player_logics import (
+    LogicAlwaysDefectBelieveTruth,
+    LogicAlwaysCooperateBelieveTruth,
+)
 
 player1 = Player(LogicAlwaysCooperateBelieveTruth)
 player2 = Player(LogicAlwaysDefectBelieveTruth)
