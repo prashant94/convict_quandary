@@ -1,8 +1,8 @@
 from game import Game
 from player import Player
 from player_logics import (
-    LogicAlwaysDefectBelieveTruth,
     LogicAlwaysCooperateBelieveTruth,
+    LogicAlwaysDefectBelieveTruth,
 )
 
 player1 = Player(LogicAlwaysCooperateBelieveTruth)

@@ -1,7 +1,7 @@
 from convictquandary import Game, Player
 from convictquandary.player_logics import (
-    LogicAlwaysDefectBelieveTruth,
     LogicAlwaysCooperateBelieveTruth,
+    LogicAlwaysDefectBelieveTruth,
 )
 
 
