@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from constants import Action, Persuasion, Belief
 from typing import List
+
+from constants import Action, Belief, Persuasion
 
 
 class PlayerLogic(ABC):

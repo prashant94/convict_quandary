@@ -1,4 +1,4 @@
-fail_fast: true
+fail_fast: false
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
@@ -32,6 +32,17 @@ repos:
         verbose: true
   - repo: local
     hooks:
+      - id: isort
+        name: isort
+        entry: isort
+        args: ["./convictquandary/","./tests/","--profile", "black", "--filter-files"]
+        language: python
+        types: [python]
+        pass_filenames: false
+        additional_dependencies: [isort]
+        verbose: true
+  - repo: local
+    hooks:
       - id: flake8-linting
         name: flake8-linting
         entry: flake8
@@ -50,3 +61,32 @@ repos:
         types: [python]
         pass_filenames: false
         additional_dependencies: [pytest]
+  - repo: local
+    hooks:
+      - id: code-coverage
+        name: code-coverage
+        entry: coverage run -m pytest
+        language: python
+        types: [python]
+        pass_filenames: false
+        additional_dependencies: [coverage, pytest]
+        verbose: true
+  - repo: local
+    hooks:
+      - id: code-coverage-html-report
+        name: code-coverage-html-report
+        entry: coverage html
+        language: python
+        types: [python]
+        pass_filenames: false
+        additional_dependencies: [coverage]
+  - repo: local
+    hooks:
+      - id: bandit-security-checks
+        name: bandit-security-checks
+        entry: bandit -r ./convictquandary/
+        language: python
+        types: [python]
+        pass_filenames: false
+        additional_dependencies: [bandit]
+        verbose: true
