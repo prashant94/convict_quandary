@@ -1,7 +1,7 @@
 from typing import List
 
-from constants import Action, Belief, Persuasion
-from player_logic import PlayerLogic
+from ..constants import Action, Belief, Persuasion
+from ..player_logic import PlayerLogic
 
 
 class LogicAlwaysCooperateBelieveTruth(PlayerLogic):
