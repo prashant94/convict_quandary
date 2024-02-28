@@ -1,5 +1,5 @@
-from constants import Action, Persuasion
-from player_logic import PlayerLogic
+from .constants import Action, Persuasion
+from .player_logic import PlayerLogic
 
 
 class Player:

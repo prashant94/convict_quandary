@@ -1,11 +1,12 @@
+from abc import ABC, abstractmethod
 from typing import List
 
-from constants import Action, Belief, Persuasion
-from player_logic import PlayerLogic
+from .constants import Action, Belief, Persuasion
 
 
-class LogicAlwaysDefectBelieveTruth(PlayerLogic):
+class PlayerLogic(ABC):
 
+    @abstractmethod
     def get_persuasion(
         self,
         player_actions: List[Action],
@@ -14,8 +15,9 @@ class LogicAlwaysDefectBelieveTruth(PlayerLogic):
         opponent_actions: List[Action],
         opponent_persuasions: List[Persuasion],
     ) -> Persuasion:
-        return Persuasion.TRUTH
+        pass
 
+    @abstractmethod
     def get_belief(
         self,
         player_actions: List[Action],
@@ -24,8 +26,9 @@ class LogicAlwaysDefectBelieveTruth(PlayerLogic):
         opponent_actions: List[Action],
         opponent_persuasions: List[Persuasion],
     ) -> Belief:
-        return Belief.BELIEVE
+        pass
 
+    @abstractmethod
     def get_action(
         self,
         player_actions: List[Action],
@@ -34,4 +37,4 @@ class LogicAlwaysDefectBelieveTruth(PlayerLogic):
         opponent_actions: List[Action],
         opponent_persuasions: List[Persuasion],
     ) -> Action:
-        return Action.DEFECT
+        pass
