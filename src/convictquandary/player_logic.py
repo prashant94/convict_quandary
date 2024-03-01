@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import List
 
 from .constants import Action, Belief, Persuasion
 
@@ -9,32 +8,32 @@ class PlayerLogic(ABC):
     @abstractmethod
     def get_persuasion(
         self,
-        player_actions: List[Action],
-        player_persuasions: List[Persuasion],
-        player_beliefs: List[Belief],
-        opponent_actions: List[Action],
-        opponent_persuasions: List[Persuasion],
+        player_actions: list[Action],
+        player_persuasions: list[Persuasion],
+        player_beliefs: list[Belief],
+        opponent_actions: list[Action],
+        opponent_persuasions: list[Persuasion],
     ) -> Persuasion:
         pass
 
     @abstractmethod
     def get_belief(
         self,
-        player_actions: List[Action],
-        player_persuasions: List[Persuasion],
-        player_beliefs: List[Belief],
-        opponent_actions: List[Action],
-        opponent_persuasions: List[Persuasion],
+        player_actions: list[Action],
+        player_persuasions: list[Persuasion],
+        player_beliefs: list[Belief],
+        opponent_actions: list[Action],
+        opponent_persuasions: list[Persuasion],
     ) -> Belief:
         pass
 
     @abstractmethod
     def get_action(
         self,
-        player_actions: List[Action],
-        player_persuasions: List[Persuasion],
-        player_beliefs: List[Belief],
-        opponent_actions: List[Action],
-        opponent_persuasions: List[Persuasion],
+        player_actions: list[Action],
+        player_persuasions: list[Persuasion],
+        player_beliefs: list[Belief],
+        opponent_actions: list[Action],
+        opponent_persuasions: list[Persuasion],
     ) -> Action:
         pass
