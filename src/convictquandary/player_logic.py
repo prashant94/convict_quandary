@@ -14,7 +14,7 @@ class PlayerLogic(ABC):
         opponent_actions: list[Action],
         opponent_persuasions: list[Persuasion],
     ) -> Persuasion:
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def get_belief(
@@ -25,7 +25,7 @@ class PlayerLogic(ABC):
         opponent_actions: list[Action],
         opponent_persuasions: list[Persuasion],
     ) -> Belief:
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def get_action(
@@ -36,4 +36,4 @@ class PlayerLogic(ABC):
         opponent_actions: list[Action],
         opponent_persuasions: list[Persuasion],
     ) -> Action:
-        pass
+        pass  # pragma: no cover
