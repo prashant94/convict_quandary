@@ -46,7 +46,7 @@ jobs:
           python -m tox
 
       - name: "Upload coverage data"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: covdata
           path: .coverage.*
@@ -69,7 +69,7 @@ jobs:
           python -m pip install tox tox-gh-actions
 
       - name: "Download coverage data"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: covdata
 
@@ -118,7 +118,7 @@ jobs:
         run: python3 -m build
 
       - name: Store the distribution packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: python-package-distributions
           path: dist/
@@ -137,7 +137,7 @@ jobs:
 
     steps:
     - name: Download all the dists
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: python-package-distributions
         path: dist/
@@ -156,7 +156,7 @@ jobs:
 
     steps:
     - name: Download all the dists
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: python-package-distributions
         path: dist/
@@ -198,7 +198,7 @@ jobs:
 
     steps:
     - name: Download all the dists
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         name: python-package-distributions
         path: dist/
