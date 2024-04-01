@@ -204,3 +204,5 @@ cq_env/Scripts/pythonw.exe
 cq_env/*
 
 coverage.json
+
+_version.py
