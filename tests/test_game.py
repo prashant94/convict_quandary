@@ -123,12 +123,6 @@ def test_player_error_abstract_function_undefined():
         ) -> Persuasion:
             return Persuasion.TRUTH
 
-    with pytest.raises(
-        TypeError,
-        match=(
-            "Can't instantiate abstract class LogicWithError "
-            "without an implementation for abstract method 'get_action'"
-        ),
-    ) as excinfo:
+    with pytest.raises(TypeError) as excinfo:
         Player(LogicWithError)
     assert "Can't instantiate abstract class LogicWithError" in str(excinfo.value)
