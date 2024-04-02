@@ -1,10 +1,11 @@
 import pytest
 
-from convictquandary import Game, Player, utils
+from convictquandary import Action, Belief, Game, Persuasion, Player, PlayerLogic, utils
 from convictquandary.player_logics import (
     LogicAlwaysCooperateBelieveTruth,
     LogicAlwaysDefectBelieveTruth,
 )
+from convictquandary.utils import exception_factory
 
 
 def test_1v1_game_always_defect_win():
@@ -54,3 +55,79 @@ def test_1v1_game_already_played():
 def test_utils_exception_factory():
     with pytest.raises(ValueError, match="Test message"):
         raise utils.exception_factory(ValueError, "Test message")
+
+
+def test_player_error_in_action_in_game():
+
+    class LogicWithError(PlayerLogic):
+
+        def get_action(
+            self,
+            player_actions: list[Action],
+            player_persuasions: list[Persuasion],
+            player_beliefs: list[Belief],
+            opponent_actions: list[Action],
+            opponent_persuasions: list[Persuasion],
+        ) -> Action:
+            raise exception_factory(NotImplementedError, "Player action error")
+
+    player1 = Player(LogicAlwaysCooperateBelieveTruth)
+    player2 = Player(LogicWithError)
+    game = Game(player1, player2, 200)
+    game.play_game()
+    assert game.get_game_result() == (1000, 0), "Player with error not having 0 score"
+
+
+def test_player_error_in_persuasion_in_game():
+
+    class LogicWithError(PlayerLogic):
+
+        def get_persuasion(
+            self,
+            player_actions: list[Action],
+            player_persuasions: list[Persuasion],
+            player_beliefs: list[Belief],
+            opponent_actions: list[Action],
+            opponent_persuasions: list[Persuasion],
+        ) -> Persuasion:
+            raise exception_factory(NotImplementedError, "Player persuasion Error")
+
+        def get_action(
+            self,
+            player_actions: list[Action],
+            player_persuasions: list[Persuasion],
+            player_beliefs: list[Belief],
+            opponent_actions: list[Action],
+            opponent_persuasions: list[Persuasion],
+        ) -> Action:
+            return Action.COOPERATE
+
+    player1 = Player(LogicAlwaysCooperateBelieveTruth)
+    player2 = Player(LogicWithError)
+    game = Game(player1, player2, 200)
+    game.play_game()
+    assert game.get_game_result() == (1000, 0), "Player with error not having 0 score"
+
+
+def test_player_error_abstract_function_undefined():
+
+    class LogicWithError(PlayerLogic):
+
+        def get_persuasion(
+            self,
+            player_actions: list[Action],
+            player_persuasions: list[Persuasion],
+            player_beliefs: list[Belief],
+            opponent_actions: list[Action],
+            opponent_persuasions: list[Persuasion],
+        ) -> Persuasion:
+            return Persuasion.TRUTH
+
+    with pytest.raises(
+        TypeError,
+        match=(
+            "Can't instantiate abstract class LogicWithError "
+            "without an implementation for abstract method 'get_action'"
+        ),
+    ):
+        Player(LogicWithError)

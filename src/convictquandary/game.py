@@ -1,4 +1,4 @@
-from .constants import Action
+from .constants import Action, Persuasion
 from .player import Player
 from .utils import exception_factory
 
@@ -13,6 +13,11 @@ class Game:
             (Action.COOPERATE, Action.DEFECT): (0, 5),
             (Action.DEFECT, Action.COOPERATE): (5, 0),
             (Action.DEFECT, Action.DEFECT): (0, 0),
+            (Action.DNF, Action.COOPERATE): (0, 5),
+            (Action.DNF, Action.DEFECT): (0, 5),
+            (Action.COOPERATE, Action.DNF): (5, 0),
+            (Action.DEFECT, Action.DNF): (5, 0),
+            (Action.DNF, Action.DNF): (0, 0),
         }
         self.ngames = ngames
         self.game_scores = (0, 0)
@@ -23,8 +28,16 @@ class Game:
             for i in range(0, self.ngames):
                 player1_persuasion = self.player1.get_persuasion()
                 player2_persuasion = self.player2.get_persuasion()
-                player1_action = self.player1.play_move(player2_persuasion)
-                player2_action = self.player2.play_move(player1_persuasion)
+                player1_action = (
+                    self.player1.play_move(player2_persuasion)
+                    if player1_persuasion != Persuasion.DNF
+                    else Action.DNF
+                )
+                player2_action = (
+                    self.player2.play_move(player1_persuasion)
+                    if player2_persuasion != Persuasion.DNF
+                    else Action.DNF
+                )
                 current_game_score = self.score_matrix.get(
                     (player1_action, player2_action)
                 )

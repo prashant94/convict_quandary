@@ -1,11 +1,10 @@
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
 from .constants import Action, Belief, Persuasion
 
 
-class PlayerLogic(ABC):
+class PlayerLogic(metaclass=ABCMeta):
 
-    @abstractmethod
     def get_persuasion(
         self,
         player_actions: list[Action],
@@ -14,9 +13,8 @@ class PlayerLogic(ABC):
         opponent_actions: list[Action],
         opponent_persuasions: list[Persuasion],
     ) -> Persuasion:
-        pass  # pragma: no cover
+        return Persuasion.TRUTH  # pragma: no cover
 
-    @abstractmethod
     def get_belief(
         self,
         player_actions: list[Action],
@@ -25,7 +23,7 @@ class PlayerLogic(ABC):
         opponent_actions: list[Action],
         opponent_persuasions: list[Persuasion],
     ) -> Belief:
-        pass  # pragma: no cover
+        return Belief.BELIEVE  # pragma: no cover
 
     @abstractmethod
     def get_action(
