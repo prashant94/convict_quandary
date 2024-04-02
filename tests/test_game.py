@@ -129,5 +129,6 @@ def test_player_error_abstract_function_undefined():
             "Can't instantiate abstract class LogicWithError "
             "without an implementation for abstract method 'get_action'"
         ),
-    ):
+    ) as excinfo:
         Player(LogicWithError)
+    assert "Can't instantiate abstract class LogicWithError" in str(excinfo.value)
