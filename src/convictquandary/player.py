@@ -1,14 +1,14 @@
 from functools import partial
 
 from .constants import Action, Belief, Persuasion
-from .player_logic import PlayerLogic
+from .strategy import Strategy
 from .utils import handle_exceptions
 
 
 class Player:
 
-    def __init__(self, player_logic: PlayerLogic) -> None:
-        self.player_logic = player_logic()
+    def __init__(self, strategy: Strategy) -> None:
+        self.strategy = strategy()
         self.actions = list()
         self.persuasions = list()
         self.beliefs = list()
@@ -18,7 +18,7 @@ class Player:
 
     def get_persuasion(self) -> Persuasion:
         persuasion_intermediary = partial(
-            self.player_logic.get_persuasion,
+            self.strategy.get_persuasion,
             self.actions,
             self.persuasions,
             self.beliefs,
@@ -32,7 +32,7 @@ class Player:
     def play_move(self, opponent_persuasion: Persuasion) -> Action:
         self.opponent_persuasions.append(opponent_persuasion)
         belief_intermediary = partial(
-            self.player_logic.get_belief,
+            self.strategy.get_belief,
             self.actions,
             self.persuasions,
             self.beliefs,
@@ -41,7 +41,7 @@ class Player:
         )
         player_belief = handle_exceptions(Belief.DNF)(belief_intermediary)()
         action_intermediary = partial(
-            self.player_logic.get_action,
+            self.strategy.get_action,
             self.actions,
             self.persuasions,
             self.beliefs,

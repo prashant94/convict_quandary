@@ -1,8 +1,10 @@
 from ..constants import Action, Belief, Persuasion
-from ..player_logic import PlayerLogic
+from ..strategy import Strategy
 
 
-class LogicAlwaysDefectBelieveTruth(PlayerLogic):
+class Cooperator(Strategy):
+
+    meta = {"strategy_set": "axelrod1984"}
 
     def get_action(
         self,
@@ -12,4 +14,4 @@ class LogicAlwaysDefectBelieveTruth(PlayerLogic):
         opponent_actions: list[Action],
         opponent_persuasions: list[Persuasion],
     ) -> Action:
-        return Action.DEFECT
+        return Action.COOPERATE

@@ -90,3 +90,14 @@ repos:
         pass_filenames: false
         additional_dependencies: [bandit]
         verbose: true
+  - repo: local
+    hooks:
+      - id: commitizen
+        name: conventional-commits-check
+        entry: cz
+        args: ['check', '--commit-msg-file', '.git/COMMIT_EDITMSG']
+        pass_filenames: false
+        stages: [commit-msg]
+        language: python
+        types: [python]
+        additional_dependencies: [commitizen]
