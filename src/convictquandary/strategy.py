@@ -1,9 +1,19 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 
 from .constants import Action, Belief, Persuasion
+from .utils import exception_factory
 
 
-class PlayerLogic(metaclass=ABCMeta):
+class Strategy(ABC):
+
+    @property
+    def meta():
+        pass
+
+    def __init_subclass__(cls, **kwargs) -> None:
+        if (cls.meta != Strategy.meta) and (not isinstance(cls.meta, dict)):
+            raise exception_factory(TypeError, "Strategy meta must be of type dict")
+        return super().__init_subclass__(**kwargs)
 
     def get_persuasion(
         self,
