@@ -1,13 +1,16 @@
+import warnings
+
 from .constants import Action, Persuasion
 from .player import Player
+from .strategy import Strategy
 from .utils import exception_factory
 
 
 class Game:
 
-    def __init__(self, player1: Player, player2: Player, ngames: int = 1) -> None:
-        self.player1 = player1
-        self.player2 = player2
+    def __init__(self, player1: Strategy, player2: Strategy, ngames: int = 1) -> None:
+        self.player1 = Player(player1)
+        self.player2 = Player(player2)
         self.score_matrix = {
             (Action.COOPERATE, Action.COOPERATE): (3, 3),
             (Action.COOPERATE, Action.DEFECT): (0, 5),
@@ -50,8 +53,10 @@ class Game:
         else:
             raise exception_factory(ValueError, "Game already finished")
 
-    def get_players(self) -> tuple[Player, Player]:
-        return (self.player1, self.player2)
+    def get_players(self) -> tuple[Strategy, Strategy]:
+        return (self.player1.strategy, self.player2.strategy)
 
     def get_game_result(self) -> tuple[int, int]:
+        if not self.complete:
+            warnings.warn("Game has not been played yet")
         return self.game_scores

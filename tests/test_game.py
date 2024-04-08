@@ -1,14 +1,12 @@
 import pytest
 
-from convictquandary import Action, Belief, Game, Persuasion, Player, Strategy, utils
+from convictquandary import Action, Belief, Game, Persuasion, Strategy, utils
 from convictquandary.strategies import Cooperator, Defector
 from convictquandary.utils import exception_factory
 
 
 def test_1v1_game_always_defect_win():
-    player1 = Player(Cooperator)
-    player2 = Player(Defector)
-    game = Game(player1, player2, 200)
+    game = Game(Cooperator, Defector, 200)
     game.play_game()
     assert game.get_game_result() == (
         0,
@@ -17,33 +15,27 @@ def test_1v1_game_always_defect_win():
 
 
 def test_1v1_game_always_defect_against_itself():
-    player1 = Player(Defector)
-    player2 = Player(Defector)
-    game = Game(player1, player2, 200)
+    game = Game(Defector, Defector, 200)
     game.play_game()
     assert game.get_game_result() == (0, 0), "Always defect against itself not 0"
 
 
 def test_1v1_game_always_cooperate_against_itself():
-    player1 = Player(Cooperator)
-    player2 = Player(Cooperator)
-    game = Game(player1, player2, 200)
+    game = Game(Cooperator, Cooperator, 200)
     game.play_game()
     assert game.get_game_result() == (600, 600), "Always cooperate not score 600"
 
 
 def test_1v1_game_get_players():
-    player1 = Player(Cooperator)
-    player2 = Player(Cooperator)
+    player1 = Cooperator
+    player2 = Cooperator
     game = Game(player1, player2, 200)
     p1, p2 = game.get_players()
-    assert (p1, p2) == (player1, player2), "Game returns correct players"
+    assert (type(p1), type(p2)) == (player1, player2), "Game returns correct players"
 
 
 def test_1v1_game_already_played():
-    player1 = Player(Cooperator)
-    player2 = Player(Cooperator)
-    game = Game(player1, player2, 200)
+    game = Game(Cooperator, Cooperator, 200)
     game.play_game()
     with pytest.raises(ValueError, match="Game already finished"):
         game.play_game()
@@ -68,9 +60,7 @@ def test_player_error_in_action_in_game():
         ) -> Action:
             raise exception_factory(NotImplementedError, "Player action error")
 
-    player1 = Player(Cooperator)
-    player2 = Player(LogicWithError)
-    game = Game(player1, player2, 200)
+    game = Game(Cooperator, LogicWithError, 200)
     game.play_game()
     assert game.get_game_result() == (1000, 0), "Player with error not having 0 score"
 
@@ -99,8 +89,6 @@ def test_player_error_in_persuasion_in_game():
         ) -> Action:
             return Action.COOPERATE  # pragma: no cover
 
-    player1 = Player(Cooperator)
-    player2 = Player(LogicWithError)
-    game = Game(player1, player2, 200)
+    game = Game(Cooperator, LogicWithError, 200)
     game.play_game()
     assert game.get_game_result() == (1000, 0), "Player with error not having 0 score"
